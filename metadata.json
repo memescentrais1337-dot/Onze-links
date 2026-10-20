@@ -1,0 +1,6 @@
+{
+  "name": "ONZE LOUNGE | Experiência Premium",
+  "description": "Cardápios oficiais, horários de funcionamento e localização da ONZE LOUNGE em Goiânia.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

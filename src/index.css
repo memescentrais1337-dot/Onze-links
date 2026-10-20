@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-bg-deep: #080808;
+    --color-bg-secondary: #121212;
+    --color-gold-elegant: #C6A36A;
+    --color-gold-light: #E0C49A;
+    --color-white-soft: #F5F3EF;
+    --color-gray-subtle: #999999;
+  }
+
+  body {
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #080808;
+    color: #F5F3EF;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+::-webkit-scrollbar-thumb {
+  background: #222222;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C6A36A;
+}
+
+/* Discreet luxury metallic shimmer effect */
+@keyframes subtleGoldShift {
+  0%, 100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+.animate-gold-pulse {
+  animation: subtleGoldShift 4s ease-in-out infinite;
+}
+
+/* Prevent unwanted pull-to-refresh flicker on mobile browsers */
+html, body {
+  overscroll-behavior-y: none;
+}
