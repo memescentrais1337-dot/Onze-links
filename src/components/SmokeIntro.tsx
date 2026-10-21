@@ -252,10 +252,15 @@ export const SmokeIntro: React.FC<SmokeIntroProps> = ({ onComplete, forceReplay 
       {/* 3. Vinheta escura profunda nas bordas */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_35%,#080808_95%)]" />
 
-      {/* 4. Logo Oficial ONZE LOUNGE surgindo de forma cinematográfica */}
+      {/* 4. Logo Oficial ONZE LOUNGE surgindo de forma cinematográfica sem flash de renderização */}
       <div
         ref={logoWrapperRef}
-        className="relative z-10 flex flex-col items-center px-6 text-center"
+        style={{
+          opacity: 0,
+          transform: 'translateY(10px) scale(0.92)',
+          willChange: 'opacity, transform',
+        }}
+        className="relative z-10 flex flex-col items-center px-6 text-center transform-gpu"
       >
         <BrandLogo size="lg" showWordmark={true} />
 

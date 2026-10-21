@@ -68,8 +68,8 @@ export default function App() {
       {/* Camada 3: Conteúdo Principal do Microsite (Max 520px centralizado em Desktop) */}
       <div
         ref={contentContainerRef}
-        className={`relative z-10 w-full max-w-[520px] mx-auto px-4 sm:px-6 flex flex-col flex-1 transition-opacity duration-500 ${
-          showIntro ? 'opacity-0' : 'opacity-100'
+        className={`relative z-10 w-full max-w-[520px] mx-auto px-4 sm:px-6 flex flex-col flex-1 transform-gpu ${
+          showIntro ? 'opacity-0 pointer-events-none' : ''
         }`}
       >
         {/* SEÇÃO 1: Header Premium com Logo, Frases e Horário de Funcionamento */}

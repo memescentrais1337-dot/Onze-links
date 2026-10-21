@@ -55,7 +55,10 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
               <img
                 src={currentSrc}
                 alt={ONZE_CONFIG.brand.name}
-                className="w-full h-full object-contain p-1 filter invert brightness-110 contrast-125 transition-transform duration-700 group-hover:scale-105"
+                loading="eager"
+                decoding="sync"
+                fetchPriority="high"
+                className="w-full h-full object-contain p-1 filter invert brightness-110 contrast-125 transform-gpu transition-transform duration-700 group-hover:scale-105 will-change-transform"
                 onError={handleImageError}
               />
             ) : (

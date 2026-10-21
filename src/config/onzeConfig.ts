@@ -40,7 +40,7 @@ export const ONZE_CONFIG = {
 
   links: {
     // Links oficiais de redirecionamento dos cardápios
-    menuPetiscos: 'https://cardapio-petiscoss.vercel.app/',
+    menuPetiscos: '/assets/aistudio/CARDA_PIO_ONZE_PETISCO-2025_506b3677.pdf',
     menuBebidas: 'https://cardapio-bebidas.vercel.app/',
     menuDrinks: 'https://cardapio-drinkss.vercel.app/',
 
