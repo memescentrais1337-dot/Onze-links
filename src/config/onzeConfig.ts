@@ -34,15 +34,15 @@ export const ONZE_CONFIG = {
       { day: 'Sexta e Sábado', hours: '16:00 às 01:00' },
       { day: 'Domingo', hours: '15:00 às 00:30' },
     ],
-    ageRestriction: 'Proibida a entrada e permanência de menores de 18 anos.',
+    ageRestriction: 'Proibida a entrada de menores de 18 anos.',
     instagramHandle: '@onze_lounge',
   },
 
   links: {
     // Links oficiais de redirecionamento dos cardápios
     menuPetiscos: '/assets/aistudio/CARDA_PIO_ONZE_PETISCO-2025_506b3677.pdf',
-    menuBebidas: 'https://cardapio-bebidas.vercel.app/',
-    menuDrinks: 'https://cardapio-drinkss.vercel.app/',
+    menuBebidas: '/assets/aistudio/Carda_pio_Bebidas_8711d790.pdf',
+    menuDrinks: '/assets/aistudio/Carda_pio_Digital_Prec_os_6e2287ab.pdf',
 
     // Link oficial da empresa no Google Maps
     googleMaps: 'https://maps.app.goo.gl/szYWoa4tRrFBzYqJ9',
