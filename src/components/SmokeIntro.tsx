@@ -226,10 +226,17 @@ export const SmokeIntro: React.FC<SmokeIntroProps> = ({ onComplete, forceReplay 
         autoPlay
         muted
         playsInline
+        controls={false}
+        disablePictureInPicture
+        disableRemotePlayback
+        tabIndex={-1}
+        aria-hidden="true"
         className={`absolute inset-0 w-full h-full object-cover mix-blend-screen pointer-events-none transition-opacity duration-500 ${
           videoActive ? 'opacity-90' : 'opacity-0'
         }`}
         onPlaying={() => setVideoActive(true)}
+        onPause={() => setVideoActive(false)}
+        onError={() => setVideoActive(false)}
       >
         <source src={ONZE_CONFIG.media.videoIntroMp4} type="video/mp4" />
         <source src={ONZE_CONFIG.media.videoIntroMp4Alt} type="video/mp4" />

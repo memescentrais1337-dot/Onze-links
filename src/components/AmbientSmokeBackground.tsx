@@ -8,22 +8,29 @@ export const AmbientSmokeBackground: React.FC = () => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   useEffect(() => {
-    // 1. Inicializar e garantir autoplay em loop contínuo do vídeo de fumaça real
+    // 1. Inicializar e tentar autoplay sem som
     const video = videoRef.current;
     if (video) {
       video.muted = true;
+      video.defaultMuted = true;
+
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise
-          .then(() => setIsVideoPlaying(true))
+          .then(() => {
+            setIsVideoPlaying(true);
+          })
           .catch(() => {
-            // Em caso de restrição do navegador, tenta novamente com interação ou mantém fallback
+            // Em dispositivos com modo de economia de energia ativado (Low Power Mode),
+            // o navegador pode recusar o autoplay de vídeo.
+            // Mantemos isVideoPlaying como false para ocultar o elemento de vídeo (opacity: 0)
+            // e impedir que o navegador exiba o botão nativo de Play.
             setIsVideoPlaying(false);
           });
       }
     }
 
-    // 2. Fallback procedural orgânico em Canvas caso o vídeo não inicialize
+    // 2. Animação procedural contínua em Canvas (funciona sempre, com ou sem vídeo)
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -119,34 +126,42 @@ export const AmbientSmokeBackground: React.FC = () => {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-[#080808]">
-      {/* 1. Vídeo Real de Fumaça em Loop Contínuo no Fundo */}
+      {/* 1. Vídeo Real de Fumaça em Loop Contínuo com blindagem contra botões nativos de Play */}
       <video
         ref={videoRef}
         autoPlay
         loop
         muted
         playsInline
-        preload="auto"
-        className="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-50 contrast-125 filter pointer-events-none transition-opacity duration-1000"
+        controls={false}
+        disablePictureInPicture
+        disableRemotePlayback
+        tabIndex={-1}
+        aria-hidden="true"
+        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen contrast-125 filter pointer-events-none transition-opacity duration-1000 ${
+          isVideoPlaying ? 'opacity-45' : 'opacity-0'
+        }`}
         onPlaying={() => setIsVideoPlaying(true)}
+        onPause={() => setIsVideoPlaying(false)}
+        onError={() => setIsVideoPlaying(false)}
       >
         <source src={ONZE_CONFIG.media.videoIntroMp4} type="video/mp4" />
         <source src={ONZE_CONFIG.media.videoIntroMp4Alt} type="video/mp4" />
         <source src={ONZE_CONFIG.media.videoIntroWebm} type="video/webm" />
       </video>
 
-      {/* 2. Camada de Suporte em Canvas para Profundidade Extra */}
+      {/* 2. Camada Procedural em Canvas para Profundidade Perfeita e Fallback Instantâneo */}
       <canvas
         ref={canvasRef}
-        className={`absolute inset-0 w-full h-full mix-blend-screen transition-opacity duration-700 ${
-          isVideoPlaying ? 'opacity-30' : 'opacity-70'
+        className={`absolute inset-0 w-full h-full mix-blend-screen pointer-events-none transition-opacity duration-700 ${
+          isVideoPlaying ? 'opacity-35' : 'opacity-70'
         }`}
       />
 
-      {/* 3. Camada de contraste para preservar 100% de legibilidade dos textos e botões */}
+      {/* 3. Camada de contraste para preservar 100% da legibilidade dos textos e botões */}
       <div className="absolute inset-0 bg-[#080808]/30 pointer-events-none" />
 
-      {/* 4. Degradê superior para iluminar o topo suavemente com champagne */}
+      {/* 4. Degradê superior para transição suave com o topo */}
       <div className="absolute top-0 left-0 right-0 h-44 bg-gradient-to-b from-[#080808] via-[#080808]/60 to-transparent pointer-events-none" />
 
       {/* 5. Degradê inferior sólido para ancorar o rodapé e manter contraste */}
