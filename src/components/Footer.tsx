@@ -41,6 +41,23 @@ export const Footer: React.FC = () => {
       <p className="text-[10px] tracking-widest text-[#666666] uppercase">
         © {currentYear} {ONZE_CONFIG.brand.name}. TODOS OS DIREITOS RESERVADOS.
       </p>
+
+      {/* Crédito de Produção - ClicaÊ Bio */}
+      <div className="mt-3.5 pt-3 border-t border-[#181818] w-full max-w-[220px] flex items-center justify-center">
+        <a
+          href={ONZE_CONFIG.links.producer}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Produzido por ClicaÊ Bio"
+          className="group inline-flex items-center gap-1.5 text-[10px] tracking-wider text-[#777777] hover:text-[#E0C49A] transition-colors duration-300"
+        >
+          <span className="font-light">Produzido por</span>
+          <span className="font-semibold text-[#888888] group-hover:text-[#E0C49A] transition-colors underline decoration-[#C6A36A]/30 underline-offset-2">
+            ClicaÊ Bio
+          </span>
+          <ArrowUpRight className="w-2.5 h-2.5 text-[#C6A36A]/50 group-hover:text-[#E0C49A] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+        </a>
+      </div>
     </footer>
   );
 };

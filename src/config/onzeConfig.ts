@@ -52,6 +52,9 @@ export const ONZE_CONFIG = {
 
     // Canal direto de Reservas e Camarotes VIP (WhatsApp)
     whatsappReservations: 'https://wa.me/5562999999999?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20reservas%20de%20lounge%20e%20camarote%20na%20ONZE%20LOUNGE.',
+
+    // Produtora ClicaÊ Bio
+    producer: 'https://www.instagram.com/clicaebio',
   },
 
   media: {
