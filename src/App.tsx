@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { UtensilsCrossed, Wine, Martini } from 'lucide-react';
+import { Wine, Martini } from 'lucide-react';
 import { ONZE_CONFIG } from './config/onzeConfig';
 import { SmokeIntro } from './components/SmokeIntro';
 import { AmbientSmokeBackground } from './components/AmbientSmokeBackground';
@@ -78,18 +78,7 @@ export default function App() {
         {/* SEÇÃO 2: Links Principais (Redirecionadores Oficiais dos Cardápios) */}
         <main className="w-full space-y-3.5 my-3" aria-label="Cardápios oficiais da Onze Lounge">
           <div ref={buttonsGroupRef} className="space-y-3.5">
-            {/* BOTÃO 01: CARDÁPIO DE PETISCOS */}
-            <div className="gsap-link-button">
-              <LinkButton
-                title="CARDÁPIO DE PETISCOS"
-                description="Explore nossos sabores."
-                icon={<UtensilsCrossed className="w-5 h-5" />}
-                href={ONZE_CONFIG.links.menuPetiscos}
-                isExternal={true}
-              />
-            </div>
-
-            {/* BOTÃO 02: CARDÁPIO DE BEBIDAS */}
+            {/* BOTÃO 01: CARDÁPIO DE BEBIDAS */}
             <div className="gsap-link-button">
               <LinkButton
                 title="CARDÁPIO DE BEBIDAS"
