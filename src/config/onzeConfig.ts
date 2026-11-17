@@ -41,7 +41,7 @@ export const ONZE_CONFIG = {
   links: {
     // Links oficiais de redirecionamento dos cardápios
     menuPetiscos: '/assets/aistudio/CARDA_PIO_ONZE_PETISCO-2025_506b3677.pdf',
-    menuBebidas: 'https://onze-cardapio8anos.vercel.app/',
+    menuBebidas: 'https://cardapio-onze-oficial.vercel.app/',
     menuDrinks: '/assets/aistudio/Carda_pio_Digital_Prec_os_6e2287ab.pdf',
 
     // Link oficial da empresa no Google Maps
