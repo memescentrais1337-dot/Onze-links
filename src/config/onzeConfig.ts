@@ -54,7 +54,7 @@ export const ONZE_CONFIG = {
     whatsappReservations: 'https://wa.me/5562999999999?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20reservas%20de%20lounge%20e%20camarote%20na%20ONZE%20LOUNGE.',
 
     // Produtora ClicaÊ Bio
-    producer: 'https://www.instagram.com/clicaebio',
+    producer: 'https://www.instagram.com/clicaebio/',
   },
 
   media: {
@@ -62,6 +62,8 @@ export const ONZE_CONFIG = {
     logoPrimary: '/images/onzelogo.png',
     logoFallback: '/images/logo-onze.png',
     logoWhite: '/images/logo-onze-branca.png',
+    logoClicae: '/assets/aistudio/WhatsApp_Image_2026-11-17_at_22.41.29_be5d0219.jpeg',
+    logoClicaeFallback: '/images/clicae-logo.jpeg',
     photoAmbiente1: '/images/AMBIENTE1.png',
     photoAmbiente2: '/images/ambiente2.png',
     background: '/images/background-onze.webp',

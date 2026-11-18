@@ -12,6 +12,7 @@ import { AmbientSmokeBackground } from './components/AmbientSmokeBackground';
 import { Header } from './components/Header';
 import { LinkButton } from './components/LinkButton';
 import { InstagramSection } from './components/InstagramSection';
+import { ClicaePromoCard } from './components/ClicaePromoCard';
 import { Footer } from './components/Footer';
 
 export default function App() {
@@ -104,6 +105,9 @@ export default function App() {
           {/* SEÇÃO: Atmosfera Onze & Localização no Google Maps */}
           <InstagramSection />
         </main>
+
+        {/* Card Discreto de Divulgação Clicaê */}
+        <ClicaePromoCard />
 
         {/* SEÇÃO: Rodapé Minimalista */}
         <Footer />
