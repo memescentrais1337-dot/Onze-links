@@ -28,17 +28,20 @@ export const SmokeIntro: React.FC<SmokeIntroProps> = ({ onComplete, forceReplay 
       // Ignora erro em modo privado
     }
 
+    const notifyComplete = () => {
+      onComplete();
+      window.dispatchEvent(new Event('onze-intro-complete'));
+    };
+
     if (containerRef.current) {
       gsap.to(containerRef.current, {
         opacity: 0,
         duration: 0.35,
         ease: 'power2.inOut',
-        onComplete: () => {
-          onComplete();
-        },
+        onComplete: notifyComplete,
       });
     } else {
-      onComplete();
+      notifyComplete();
     }
   }, [onComplete]);
 
@@ -54,6 +57,7 @@ export const SmokeIntro: React.FC<SmokeIntroProps> = ({ onComplete, forceReplay 
 
     if (prefersReducedMotion || (seenInSession && !forceReplay)) {
       onComplete();
+      window.dispatchEvent(new Event('onze-intro-complete'));
       return;
     }
 
@@ -95,6 +99,11 @@ export const SmokeIntro: React.FC<SmokeIntroProps> = ({ onComplete, forceReplay 
     // 3. Inicialização e fallback do vídeo de fumaça real
     const video = videoRef.current;
     if (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.setAttribute('muted', '');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise
@@ -238,6 +247,7 @@ export const SmokeIntro: React.FC<SmokeIntroProps> = ({ onComplete, forceReplay 
         onPause={() => setVideoActive(false)}
         onError={() => setVideoActive(false)}
       >
+        <source src={ONZE_CONFIG.media.videoAmbientMp4} type="video/mp4" />
         <source src={ONZE_CONFIG.media.videoIntroMp4} type="video/mp4" />
         <source src={ONZE_CONFIG.media.videoIntroMp4Alt} type="video/mp4" />
         <source src={ONZE_CONFIG.media.videoIntroWebm} type="video/webm" />

@@ -70,6 +70,7 @@ export const ONZE_CONFIG = {
     photoAmbiente2: resolvePublicPath('/images/ambiente2.png'),
     background: resolvePublicPath('/images/background-onze.webp'),
     smokeTexture: resolvePublicPath('/images/textura-fumaca.webp'),
+    videoAmbientMp4: resolvePublicPath('/videos/fumaca-ambient.mp4'),
     videoIntroWebm: resolvePublicPath('/videos/fumaca-abertura.webm'),
     videoIntroMp4: resolvePublicPath('/videos/fumaca-abertura.mp4'),
     videoIntroMp4Alt: resolvePublicPath('/videos/fumaça.mp4'),
