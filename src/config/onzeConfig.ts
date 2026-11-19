@@ -1,3 +1,5 @@
+import { resolvePublicPath } from '../utils/assetPath';
+
 /**
  * Configuração Centralizada — ONZE LOUNGE
  * Edite facilmente os links, textos, endereços e caminhos de mídia neste arquivo.
@@ -40,9 +42,9 @@ export const ONZE_CONFIG = {
 
   links: {
     // Links oficiais de redirecionamento dos cardápios
-    menuPetiscos: '/assets/aistudio/CARDA_PIO_ONZE_PETISCO-2025_506b3677.pdf',
+    menuPetiscos: resolvePublicPath('/assets/aistudio/CARDA_PIO_ONZE_PETISCO-2025_506b3677.pdf'),
     menuBebidas: 'https://cardapio-onze-oficial.vercel.app/',
-    menuDrinks: '/assets/aistudio/Carda_pio_Digital_Prec_os_6e2287ab.pdf',
+    menuDrinks: resolvePublicPath('/assets/aistudio/Carda_pio_Digital_Prec_os_6e2287ab.pdf'),
 
     // Link oficial da empresa no Google Maps
     googleMaps: 'https://maps.app.goo.gl/szYWoa4tRrFBzYqJ9',
@@ -59,18 +61,18 @@ export const ONZE_CONFIG = {
 
   media: {
     // Arquivos da marca na pasta /public
-    logoPrimary: '/images/onzelogo.png',
-    logoFallback: '/images/logo-onze.png',
-    logoWhite: '/images/logo-onze-branca.png',
-    logoClicae: '/assets/aistudio/WhatsApp_Image_2026-11-17_at_22.41.29_be5d0219.jpeg',
-    logoClicaeFallback: '/images/clicae-logo.jpeg',
-    photoAmbiente1: '/images/AMBIENTE1.png',
-    photoAmbiente2: '/images/ambiente2.png',
-    background: '/images/background-onze.webp',
-    smokeTexture: '/images/textura-fumaca.webp',
-    videoIntroWebm: '/videos/fumaca-abertura.webm',
-    videoIntroMp4: '/videos/fumaca-abertura.mp4',
-    videoIntroMp4Alt: '/videos/fumaça.mp4',
+    logoPrimary: resolvePublicPath('/images/onzelogo.png'),
+    logoFallback: resolvePublicPath('/images/logo-onze.png'),
+    logoWhite: resolvePublicPath('/images/logo-onze-branca.png'),
+    logoClicae: resolvePublicPath('/assets/aistudio/WhatsApp_Image_2026-11-17_at_22.41.29_be5d0219.jpeg'),
+    logoClicaeFallback: resolvePublicPath('/images/clicae-logo.jpeg'),
+    photoAmbiente1: resolvePublicPath('/images/AMBIENTE1.png'),
+    photoAmbiente2: resolvePublicPath('/images/ambiente2.png'),
+    background: resolvePublicPath('/images/background-onze.webp'),
+    smokeTexture: resolvePublicPath('/images/textura-fumaca.webp'),
+    videoIntroWebm: resolvePublicPath('/videos/fumaca-abertura.webm'),
+    videoIntroMp4: resolvePublicPath('/videos/fumaca-abertura.mp4'),
+    videoIntroMp4Alt: resolvePublicPath('/videos/fumaça.mp4'),
   },
 
   // Conteúdo detalhado dos cardápios para preview instantâneo no microsite

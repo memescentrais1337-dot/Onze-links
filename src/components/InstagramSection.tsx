@@ -1,17 +1,18 @@
 import React from 'react';
 import { MapPin, ArrowUpRight } from 'lucide-react';
 import { ONZE_CONFIG } from '../config/onzeConfig';
+import { resolvePublicPath } from '../utils/assetPath';
 
 // Fotos reais oficiais do ambiente da ONZE LOUNGE
 const AMBIENTE_PHOTOS = [
   {
     src: ONZE_CONFIG.media.photoAmbiente1,
-    fallback: '/images/ambiente1.png',
+    fallback: resolvePublicPath('/images/ambiente1.png'),
     alt: 'Atmosfera Onze Lounge - Salão e Lounges',
   },
   {
     src: ONZE_CONFIG.media.photoAmbiente2,
-    fallback: '/images/AMBIENTE2.png',
+    fallback: resolvePublicPath('/images/AMBIENTE2.png'),
     alt: 'Atmosfera Onze Lounge - Bar e Balcão',
   },
 ];
