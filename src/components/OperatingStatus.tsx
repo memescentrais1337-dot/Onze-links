@@ -42,7 +42,7 @@ export const OperatingStatus: React.FC = () => {
       onClick={() => setIsModalOpen(false)}
     >
       <div
-        className="relative w-full max-w-sm rounded-2xl bg-[#101010] border border-[#C6A36A]/40 p-5 sm:p-6 shadow-[0_25px_60px_rgba(0,0,0,0.95)] text-left select-none"
+        className="relative w-full max-w-sm rounded-2xl bg-[#110f10] border border-[#C6A36A]/45 p-5 sm:p-6 shadow-[0_25px_60px_rgba(0,0,0,0.95)] text-left select-none"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Cabeçalho do Modal de Horários */}
@@ -117,7 +117,7 @@ export const OperatingStatus: React.FC = () => {
             e.stopPropagation();
             setIsModalOpen(true);
           }}
-          className="group flex items-center gap-2 py-1.5 px-3.5 rounded-full bg-[#141414]/90 hover:bg-[#1a1a1a] border border-[#C6A36A]/25 hover:border-[#C6A36A]/60 shadow-[0_2px_12px_rgba(0,0,0,0.5)] transition-all duration-300 active:scale-95 text-left cursor-pointer"
+          className="group flex items-center gap-2 py-1.5 px-3.5 rounded-full bg-[#161213]/90 hover:bg-[#1c1516] border border-[#C6A36A]/30 hover:border-[#DC2626]/55 shadow-[0_2px_12px_rgba(0,0,0,0.5)] transition-all duration-300 active:scale-95 text-left cursor-pointer"
           aria-label="Ver horários de funcionamento da Onze Lounge"
         >
           {/* Indicador visual de Aberto/Fechado */}

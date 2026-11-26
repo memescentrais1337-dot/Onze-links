@@ -41,16 +41,16 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
 
   return (
     <div className={`relative flex flex-col items-center justify-center select-none ${className}`}>
-      {/* Halo de iluminação dourada e fumaça escura concentrada atrás da logo */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 sm:w-60 sm:h-60 bg-[radial-gradient(circle,rgba(198,163,106,0.14)_0%,rgba(198,163,106,0.03)_40%,transparent_70%)] pointer-events-none blur-xl" />
+      {/* Halo de iluminação natalina (carmesim, dourado e pinheiro) atrás da logo */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-52 h-52 sm:w-64 sm:h-64 bg-[radial-gradient(circle,rgba(185,28,28,0.18)_0%,rgba(198,163,106,0.11)_38%,rgba(20,83,45,0.06)_58%,transparent_74%)] pointer-events-none blur-xl" />
 
-      {/* Emblema Oficial Circular */}
+      {/* Emblema Oficial Circular de Natal */}
       <div className="relative group">
-        {/* Linha curva dourada sutil externa (estilo agência de design) */}
-        <div className="absolute -inset-1 rounded-full bg-gradient-to-b from-[#C6A36A]/40 via-[#C6A36A]/10 to-[#C6A36A]/30 opacity-70 blur-[1px] group-hover:opacity-100 transition-opacity duration-700" />
+        {/* Aura natalina externa (vermelho rubi + dourado champagne + verde pinheiro) */}
+        <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-[#DC2626]/45 via-[#C6A36A]/35 to-[#166534]/40 opacity-75 blur-[1.5px] group-hover:opacity-100 transition-opacity duration-700" />
 
-        <div className={`relative ${emblemDimensions} rounded-full p-[1.5px] bg-gradient-to-b from-[#C6A36A]/60 via-[#55462c]/40 to-[#C6A36A]/40 shadow-[0_10px_35px_rgba(0,0,0,0.8)]`}>
-          <div className="w-full h-full rounded-full bg-[#0a0a0a] flex items-center justify-center overflow-hidden border border-[#1e1b15]">
+        <div className={`relative ${emblemDimensions} rounded-full p-[1.5px] bg-gradient-to-b from-[#DC2626]/70 via-[#C6A36A]/55 to-[#166534]/60 shadow-[0_10px_35px_rgba(0,0,0,0.85)]`}>
+          <div className="w-full h-full rounded-full bg-[#060606] flex items-center justify-center overflow-hidden border border-[#2a1717]">
             {!imageError ? (
               <img
                 src={currentSrc}
@@ -58,7 +58,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
                 loading="eager"
                 decoding="sync"
                 fetchPriority="high"
-                className="w-full h-full object-contain p-1 filter invert brightness-110 contrast-125 transform-gpu transition-transform duration-700 group-hover:scale-105 will-change-transform"
+                className="w-full h-full object-cover scale-[1.03] transform-gpu transition-transform duration-700 group-hover:scale-[1.08] will-change-transform"
                 onError={handleImageError}
               />
             ) : (
@@ -81,11 +81,11 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
           </h1>
 
           <div className="flex items-center justify-center gap-2.5 mt-1.5 w-full">
-            <span className="h-[1px] w-6 sm:w-8 bg-gradient-to-r from-transparent to-[#C6A36A]/60" />
-            <span className="text-[9px] sm:text-[10px] tracking-[0.45em] font-medium text-[#C6A36A] uppercase font-display">
+            <span className="h-[1px] w-6 sm:w-8 bg-gradient-to-r from-transparent via-[#DC2626]/55 to-[#C6A36A]/75" />
+            <span className="text-[9px] sm:text-[10px] tracking-[0.45em] font-medium text-[#E0C49A] uppercase font-display">
               LOUNGE
             </span>
-            <span className="h-[1px] w-6 sm:w-8 bg-gradient-to-l from-transparent to-[#C6A36A]/60" />
+            <span className="h-[1px] w-6 sm:w-8 bg-gradient-to-l from-transparent via-[#166534]/65 to-[#C6A36A]/75" />
           </div>
         </div>
       )}

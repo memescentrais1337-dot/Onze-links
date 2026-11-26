@@ -1,10 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ONZE_CONFIG } from '../config/onzeConfig';
 
-export const AmbientSmokeBackground: React.FC = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+interface AmbientSmokeBackgroundProps {
+  canPlayVideo?: boolean;
+}
+
+export const AmbientSmokeBackground: React.FC<AmbientSmokeBackgroundProps> = ({
+  canPlayVideo = true,
+}) => {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animIdRef = useRef<number | null>(null);
+  const hasSeekedInitialRef = useRef(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const isVideoPlayingRef = useRef(false);
 
@@ -12,13 +19,34 @@ export const AmbientSmokeBackground: React.FC = () => {
     isVideoPlayingRef.current = isVideoPlaying;
   }, [isVideoPlaying]);
 
+  const attachVideoRef = useCallback((node: HTMLVideoElement | null) => {
+    videoRef.current = node;
+    if (node) {
+      // Garantir atributos HTML e propriedades DOM antes de qualquer tentativa de autoplay no iOS/Android
+      node.muted = true;
+      node.defaultMuted = true;
+      node.playsInline = true;
+      node.setAttribute('muted', '');
+      node.setAttribute('playsinline', '');
+      node.setAttribute('webkit-playsinline', '');
+    }
+  }, []);
+
+  // 1. Reprodução resiliente do vídeo de fumaça no fundo (sem disputa de decoder com a abertura)
   useEffect(() => {
+    if (!canPlayVideo) return;
+
     const video = videoRef.current;
+    if (!video) return;
+
+    let cancelled = false;
 
     const tryPlayVideo = () => {
-      if (!video) return;
+      if (cancelled || !video) return;
+
       video.muted = true;
       video.defaultMuted = true;
+      video.playsInline = true;
       video.setAttribute('muted', '');
       video.setAttribute('playsinline', '');
       video.setAttribute('webkit-playsinline', '');
@@ -32,19 +60,35 @@ export const AmbientSmokeBackground: React.FC = () => {
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
-            setIsVideoPlaying(true);
+            if (!cancelled) {
+              setIsVideoPlaying(true);
+            }
           })
           .catch(() => {
-            setIsVideoPlaying(false);
+            if (!cancelled) {
+              setIsVideoPlaying(false);
+            }
           });
       }
     };
 
-    if (video) {
+    const handleLoadedMetadata = () => {
+      if (!hasSeekedInitialRef.current && video.duration > 3) {
+        hasSeekedInitialRef.current = true;
+        try {
+          video.currentTime = 2.0;
+        } catch {
+          // Ignora se o navegador ainda não permitir seek
+        }
+      }
       tryPlayVideo();
-      video.addEventListener('loadeddata', tryPlayVideo);
-      video.addEventListener('canplay', tryPlayVideo);
-    }
+    };
+
+    const handleTimeUpdate = () => {
+      if (!video.paused && !isVideoPlayingRef.current) {
+        setIsVideoPlaying(true);
+      }
+    };
 
     const handleVisibility = () => {
       if (!document.hidden) {
@@ -52,35 +96,38 @@ export const AmbientSmokeBackground: React.FC = () => {
       }
     };
 
-    const handleIntroComplete = () => {
+    const handleInteraction = () => {
       tryPlayVideo();
     };
 
-    const handleFirstInteraction = () => {
-      tryPlayVideo();
-    };
+    tryPlayVideo();
 
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+    video.addEventListener('loadeddata', tryPlayVideo);
+    video.addEventListener('canplay', tryPlayVideo);
+    video.addEventListener('timeupdate', handleTimeUpdate);
     document.addEventListener('visibilitychange', handleVisibility);
-    window.addEventListener('onze-intro-complete', handleIntroComplete);
-    window.addEventListener('touchstart', handleFirstInteraction, { passive: true, once: true });
-    window.addEventListener('pointerdown', handleFirstInteraction, { passive: true, once: true });
-    window.addEventListener('scroll', handleFirstInteraction, { passive: true, once: true });
+    window.addEventListener('touchstart', handleInteraction, { passive: true });
+    window.addEventListener('pointerdown', handleInteraction, { passive: true });
+    window.addEventListener('scroll', handleInteraction, { passive: true });
 
-    // Animação procedural contínua em Canvas (profundidade extra + fallback real visível no mobile)
+    return () => {
+      cancelled = true;
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      video.removeEventListener('loadeddata', tryPlayVideo);
+      video.removeEventListener('canplay', tryPlayVideo);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      window.removeEventListener('touchstart', handleInteraction);
+      window.removeEventListener('pointerdown', handleInteraction);
+      window.removeEventListener('scroll', handleInteraction);
+    };
+  }, [canPlayVideo]);
+
+  // 2. Camada procedural em Canvas (profundidade extra + fallback real visível caso autoplay seja bloqueado)
+  useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) {
-      return () => {
-        if (video) {
-          video.removeEventListener('loadeddata', tryPlayVideo);
-          video.removeEventListener('canplay', tryPlayVideo);
-        }
-        document.removeEventListener('visibilitychange', handleVisibility);
-        window.removeEventListener('onze-intro-complete', handleIntroComplete);
-        window.removeEventListener('touchstart', handleFirstInteraction);
-        window.removeEventListener('pointerdown', handleFirstInteraction);
-        window.removeEventListener('scroll', handleFirstInteraction);
-      };
-    }
+    if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -125,7 +172,7 @@ export const AmbientSmokeBackground: React.FC = () => {
         vx: (i % 2 === 0 ? 1 : -1) * (0.12 + Math.random() * 0.16),
         vy: -0.05 - Math.random() * 0.08,
         radius: (isMobile ? 160 : 300) + Math.random() * (isMobile ? 120 : 150),
-        alpha: 0.11 + Math.random() * 0.08,
+        alpha: 0.12 + Math.random() * 0.08,
         phase: Math.random() * Math.PI * 2,
         phaseSpeed: 0.004 + Math.random() * 0.004,
         warm: i % 4 === 0,
@@ -140,7 +187,7 @@ export const AmbientSmokeBackground: React.FC = () => {
 
       ctx.clearRect(0, 0, width, height);
 
-      const intensity = isVideoPlayingRef.current ? 0.35 : 1.0;
+      const intensity = isVideoPlayingRef.current ? 0.25 : 1.0;
 
       clouds.forEach((c) => {
         c.x += c.vx;
@@ -160,8 +207,8 @@ export const AmbientSmokeBackground: React.FC = () => {
           grad.addColorStop(0.45, `rgba(140, 125, 100, ${effectiveAlpha * 0.22})`);
           grad.addColorStop(1, 'rgba(8, 8, 8, 0)');
         } else {
-          grad.addColorStop(0, `rgba(190, 190, 195, ${effectiveAlpha * 0.52})`);
-          grad.addColorStop(0.45, `rgba(120, 120, 128, ${effectiveAlpha * 0.24})`);
+          grad.addColorStop(0, `rgba(195, 195, 200, ${effectiveAlpha * 0.55})`);
+          grad.addColorStop(0.45, `rgba(125, 125, 132, ${effectiveAlpha * 0.26})`);
           grad.addColorStop(1, 'rgba(8, 8, 8, 0)');
         }
 
@@ -178,15 +225,6 @@ export const AmbientSmokeBackground: React.FC = () => {
     animIdRef.current = requestAnimationFrame(render);
 
     return () => {
-      if (video) {
-        video.removeEventListener('loadeddata', tryPlayVideo);
-        video.removeEventListener('canplay', tryPlayVideo);
-      }
-      document.removeEventListener('visibilitychange', handleVisibility);
-      window.removeEventListener('onze-intro-complete', handleIntroComplete);
-      window.removeEventListener('touchstart', handleFirstInteraction);
-      window.removeEventListener('pointerdown', handleFirstInteraction);
-      window.removeEventListener('scroll', handleFirstInteraction);
       window.removeEventListener('resize', handleResize);
       if (animIdRef.current) cancelAnimationFrame(animIdRef.current);
     };
@@ -194,51 +232,51 @@ export const AmbientSmokeBackground: React.FC = () => {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-[#080808]">
-      {/* 1. Vídeo Real de Fumaça otimizado para mobile e desktop */}
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        controls={false}
-        disablePictureInPicture
-        disableRemotePlayback
-        tabIndex={-1}
-        aria-hidden="true"
-        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen contrast-125 brightness-110 filter pointer-events-none transition-opacity duration-1000 ${
-          isVideoPlaying ? 'opacity-60 sm:opacity-50' : 'opacity-0'
-        }`}
-        onPlaying={() => setIsVideoPlaying(true)}
-        onPause={() => setIsVideoPlaying(false)}
-        onError={() => setIsVideoPlaying(false)}
-      >
-        <source src={ONZE_CONFIG.media.videoAmbientMp4} type="video/mp4" />
-        <source src={ONZE_CONFIG.media.videoIntroMp4} type="video/mp4" />
-        <source src={ONZE_CONFIG.media.videoIntroMp4Alt} type="video/mp4" />
-        <source src={ONZE_CONFIG.media.videoIntroWebm} type="video/webm" />
-      </video>
+      {/* 1. Vídeo Real de Fumaça em Loop (sem mix-blend-mode/filter para compatibilidade total no iOS/Android) */}
+      {canPlayVideo && (
+        <video
+          ref={attachVideoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          controls={false}
+          disablePictureInPicture
+          disableRemotePlayback
+          tabIndex={-1}
+          aria-hidden="true"
+          style={{ transform: 'translateZ(0)' }}
+          className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-700 ${
+            isVideoPlaying ? 'opacity-75 sm:opacity-60' : 'opacity-0'
+          }`}
+          onPlaying={() => setIsVideoPlaying(true)}
+          onPause={() => setIsVideoPlaying(false)}
+          onError={() => setIsVideoPlaying(false)}
+        >
+          <source src={ONZE_CONFIG.media.videoAmbientMp4} type="video/mp4" />
+          <source src={ONZE_CONFIG.media.videoIntroMp4} type="video/mp4" />
+          <source src={ONZE_CONFIG.media.videoIntroMp4Alt} type="video/mp4" />
+          <source src={ONZE_CONFIG.media.videoIntroWebm} type="video/webm" />
+        </video>
+      )}
 
       {/* 2. Camada Procedural em Canvas para Profundidade e Fallback Visível no Mobile */}
       <canvas
         ref={canvasRef}
-        className={`absolute inset-0 w-full h-full mix-blend-screen pointer-events-none transition-opacity duration-700 ${
-          isVideoPlaying ? 'opacity-35' : 'opacity-85'
+        className={`absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-700 ${
+          isVideoPlaying ? 'opacity-25' : 'opacity-85'
         }`}
       />
 
-      {/* 3. Camada sutil de contraste para preservar legibilidade dos textos e botões */}
-      <div className="absolute inset-0 bg-[#080808]/15 pointer-events-none" />
+      {/* 3. Degradê superior suave */}
+      <div className="absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-[#080808]/90 via-[#080808]/40 to-transparent pointer-events-none" />
 
-      {/* 4. Degradê superior para transição suave com o topo */}
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#080808] via-[#080808]/50 to-transparent pointer-events-none" />
+      {/* 4. Degradê inferior suave para ancorar o rodapé */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#080808]/95 via-[#080808]/55 to-transparent pointer-events-none" />
 
-      {/* 5. Degradê inferior para ancorar o rodapé */}
-      <div className="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-[#080808] via-[#080808]/70 to-transparent pointer-events-none" />
-
-      {/* 6. Vinheta radial cinematográfica suave */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(8,8,8,0.65)_95%)]" />
+      {/* 5. Vinheta radial leve preservando a visibilidade da fumaça no mobile */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(8,8,8,0.55)_95%)]" />
     </div>
   );
 };

@@ -235,12 +235,14 @@ export const SmokeIntro: React.FC<SmokeIntroProps> = ({ onComplete, forceReplay 
         autoPlay
         muted
         playsInline
+        preload="auto"
         controls={false}
         disablePictureInPicture
         disableRemotePlayback
         tabIndex={-1}
         aria-hidden="true"
-        className={`absolute inset-0 w-full h-full object-cover mix-blend-screen pointer-events-none transition-opacity duration-500 ${
+        style={{ transform: 'translateZ(0)' }}
+        className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-500 ${
           videoActive ? 'opacity-90' : 'opacity-0'
         }`}
         onPlaying={() => setVideoActive(true)}
@@ -259,8 +261,8 @@ export const SmokeIntro: React.FC<SmokeIntroProps> = ({ onComplete, forceReplay 
         className="absolute inset-0 w-full h-full pointer-events-none mix-blend-screen"
       />
 
-      {/* 3. Vinheta escura profunda nas bordas */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_35%,#080808_95%)]" />
+      {/* 3. Vinheta escura profunda nas bordas com leve aura natalina */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(153,27,27,0.12)_0%,transparent_42%,#080808_95%)]" />
 
       {/* 4. Logo Oficial ONZE LOUNGE surgindo de forma cinematográfica sem flash de renderização */}
       <div
@@ -275,11 +277,11 @@ export const SmokeIntro: React.FC<SmokeIntroProps> = ({ onComplete, forceReplay 
         <BrandLogo size="lg" showWordmark={true} />
 
         <div className="mt-5 flex items-center gap-3">
-          <span className="w-10 h-[1px] bg-gradient-to-r from-transparent to-[#C6A36A]/50" />
+          <span className="w-10 h-[1px] bg-gradient-to-r from-transparent via-[#DC2626]/55 to-[#C6A36A]/65" />
           <span className="text-[11px] tracking-[0.35em] text-[#E0C49A] uppercase font-light">
             Goiânia
           </span>
-          <span className="w-10 h-[1px] bg-gradient-to-l from-transparent to-[#C6A36A]/50" />
+          <span className="w-10 h-[1px] bg-gradient-to-l from-transparent via-[#166534]/60 to-[#C6A36A]/65" />
         </div>
       </div>
 

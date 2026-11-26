@@ -55,6 +55,28 @@
   animation: subtleGoldShift 4s ease-in-out infinite;
 }
 
+@keyframes christmasTwinkle {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.12);
+  }
+}
+
+.animate-christmas-twinkle {
+  animation: christmasTwinkle 3.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-christmas-twinkle,
+  .animate-gold-pulse {
+    animation: none;
+  }
+}
+
 /* Prevent unwanted pull-to-refresh flicker on mobile browsers */
 html, body {
   overscroll-behavior-y: none;

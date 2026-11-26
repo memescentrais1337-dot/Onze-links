@@ -20,9 +20,10 @@ const AMBIENTE_PHOTOS = [
 export const InstagramSection: React.FC = () => {
   return (
     <section className="w-full pt-4 pb-3" aria-labelledby="atmosfera-heading">
-      <div className="relative rounded-2xl p-5 sm:p-6 bg-[#0e0e0e]/90 border border-[#C6A36A]/20 backdrop-blur-md overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
-        {/* Glow sutil na borda superior */}
-        <div className="absolute top-0 right-0 w-36 h-36 bg-[#C6A36A]/[0.04] rounded-full blur-3xl pointer-events-none" />
+      <div className="relative rounded-2xl p-5 sm:p-6 bg-[#0e0d0d]/90 border border-[#C6A36A]/25 backdrop-blur-md overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.65)]">
+        {/* Glows sutis natalinos nas bordas superiores */}
+        <div className="absolute top-0 right-0 w-36 h-36 bg-[#991B1B]/[0.08] rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-36 h-36 bg-[#14532D]/[0.08] rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col items-center text-center">
           {/* Tag de identificação */}
@@ -80,7 +81,7 @@ export const InstagramSection: React.FC = () => {
             href={ONZE_CONFIG.links.googleMaps}
             target="_blank"
             rel="noopener noreferrer"
-            className="group w-full py-3.5 px-5 rounded-xl border border-[#C6A36A]/40 bg-[#141414] hover:bg-[#1c1a16] hover:border-[#C6A36A] text-[#F5F3EF] transition-all duration-300 flex items-center justify-center gap-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.5)] active:scale-[0.985]"
+            className="group w-full py-3.5 px-5 rounded-xl border border-[#C6A36A]/45 bg-gradient-to-r from-[#191112] via-[#151413] to-[#111713] hover:border-[#DC2626]/65 text-[#F5F3EF] transition-all duration-300 flex items-center justify-center gap-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.5)] active:scale-[0.985]"
           >
             <MapPin className="w-4 h-4 text-[#C6A36A] transition-transform group-hover:scale-110" />
             <span className="text-xs font-semibold tracking-[0.16em] text-[#F5F3EF] group-hover:text-[#E0C49A] uppercase transition-colors">

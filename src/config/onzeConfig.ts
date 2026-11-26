@@ -61,8 +61,8 @@ export const ONZE_CONFIG = {
 
   media: {
     // Arquivos da marca na pasta /public
-    logoPrimary: resolvePublicPath('/images/onzelogo.png'),
-    logoFallback: resolvePublicPath('/images/logo-onze.png'),
+    logoPrimary: resolvePublicPath('/assets/aistudio/onze_natl_logo_cddfaa94.png'),
+    logoFallback: resolvePublicPath('/images/onze-natal-logo.png'),
     logoWhite: resolvePublicPath('/images/logo-onze-branca.png'),
     logoClicae: resolvePublicPath('/assets/aistudio/WhatsApp_Image_2026-11-17_at_22.41.29_be5d0219.jpeg'),
     logoClicaeFallback: resolvePublicPath('/images/clicae-logo.jpeg'),
@@ -118,7 +118,7 @@ export const ONZE_CONFIG = {
       id: 'bebidas',
       title: 'CARDÁPIO DE BEBIDAS',
       subtitle: 'Conheça nossa carta exclusiva de rótulos',
-      pdfUrl: 'https://onzelounge.com.br/cardapios/bebidas.pdf',
+      pdfUrl: 'https://cardapio-onze-oficial.vercel.app/',
       items: [
         {
           name: 'Champagne Krug Grande Cuvée',

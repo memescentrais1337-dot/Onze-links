@@ -9,6 +9,7 @@ import { Wine, Martini } from 'lucide-react';
 import { ONZE_CONFIG } from './config/onzeConfig';
 import { SmokeIntro } from './components/SmokeIntro';
 import { AmbientSmokeBackground } from './components/AmbientSmokeBackground';
+import { ChristmasOverlay } from './components/ChristmasOverlay';
 import { Header } from './components/Header';
 import { LinkButton } from './components/LinkButton';
 import { InstagramSection } from './components/InstagramSection';
@@ -59,7 +60,10 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-[#080808] text-[#F5F3EF] selection:bg-[#C6A36A]/30 selection:text-[#E0C49A] flex flex-col justify-between overflow-x-hidden">
       {/* Camada 1: Fumaça Ambiental em Movimento Suave no Fundo */}
-      <AmbientSmokeBackground />
+      <AmbientSmokeBackground canPlayVideo={!showIntro} />
+
+      {/* Camada 1.5: Atmosfera Natalina Sutil (luzes no topo e neve leve) */}
+      <ChristmasOverlay />
 
       {/* Camada 2: Animação de Abertura Cinematográfica (0 a 2.3s) */}
       {showIntro && (
